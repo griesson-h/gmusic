@@ -62,7 +62,7 @@ func shutUpAndPlay() {
 	var streamer beep.Streamer;
 	fmt.Println(len(openedSongs))
 	if len(openedSongs) == 1 {
-		controlStreamer = &beep.Ctrl{Streamer: openedSongs[0].streamer, Paused: false};
+		controlStreamer = &beep.Ctrl{Streamer: resampleStreamer(openedSongs[0].streamer, openedSongs[0].format), Paused: false};
 		speaker.Play(controlStreamer);
 		return;
 	}
@@ -100,7 +100,7 @@ func main() {
 	}
 	//openedSongs = append(openedSongs, Song{});
 	//openSong("music2.mp3", &openedSongs[1]);
-	defer openedSongs[1].streamer.Close();
+	//defer openedSongs[1].streamer.Close();
 	err := speaker.Init(globalSampleRate, int(globalSampleRate.N(time.Second/10)))
 	if err != nil {
 		log.Fatal(err);
